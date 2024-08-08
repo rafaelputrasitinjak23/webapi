@@ -155,7 +155,7 @@ app.get("/api/tools/remini", async (req, res) => {
   try {
     const data = await danz.tools.remini(url);
     if (!data) return res.status(404).json(messages.notRes);
-    res.json({ status: true, developer: dev, result: data });
+    res.json({ status: true, creator: "Rafael", result: data });
   } catch (e) {
     res.status(500).json(messages.error);
   }
@@ -167,7 +167,7 @@ app.get("/api/downloader/igdl", async (req, res) => {
   try {
     const data = await danz.downloader.igdl(url);
     if (!data) return res.status(404).json(messages.notRes);
-    res.json({ status: true, developer: dev, result: data });
+    res.json({ status: true, creator: "Rafael", result: data });
   } catch (e) {
     res.status(500).json(messages.error);
   }
