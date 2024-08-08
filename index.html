@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REST API Client</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>REST API RAFAEL</h1>
+
+    <label for="url">URL API:</label>
+    <input type="text" id="url" placeholder="https://api.rafaellzy.xyz">
+
+    <label for="method">Metode:</label>
+    <select id="method">
+        <option value="GET">GET</option>
+        <option value="POST">POST</option>
+        <option value="PUT">PUT</option>
+        <option value="DELETE">DELETE</option>
+    </select>
+
+    <label for="body">Body (untuk POST/PUT):</label>
+    <textarea id="body" placeholder='{"key": "value"}'></textarea>
+
+    <button onclick="sendRequest()">Kirim Permintaan</button>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    async function sendRequest() {
+        const url = document.getElementById('url').value;
+        const method = document.getElementById('method').value;
+        const body = document.getElementById('body').value;
+        const resultDiv = document.getElementById('result');
+
+        try {
+            let options = {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+
+            if (method === 'POST' || method === 'PUT') {
+                options.body = body;
+            }
+
+            const response = await fetch(url, options);
+            const result = await response.json();
+
+            resultDiv.textContent = JSON.stringify(result, null, 2);
+        } catch (error) {
+            resultDiv.textContent = `Error: ${error.message}`;
+        }
+    }
+</script>
+
+</body>
+</html>
