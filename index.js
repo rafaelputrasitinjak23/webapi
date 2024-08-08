@@ -148,7 +148,7 @@ app.get("/api/downloader/tiktok", async (req, res) => {
     res.status(500).json(messages.error);
   }
 });
-router.get("/api/tools/remini", async (req, res) => {
+app.get("/api/tools/remini", async (req, res) => {
   const { url } = req.query;
   if (!url) return res.status(400).json(messages.url);
 
