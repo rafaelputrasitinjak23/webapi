@@ -161,11 +161,12 @@ app.get("/api/tools/remini", async (req, res) => {
   }
 });
 app.get("/api/downloader/igdl", async (req, res) => {
+const { ig } = require('ig-unduh')
   const { url } = req.query;
   if (!url) return res.status(400).json(messages.url);
 
   try {
-    const data = await danz.downloader.igdl(url);
+    const data = await ig(url);
     if (!data) return res.status(404).json(messages.notRes);
     res.json({ status: true, creator: "Rafael", result: data });
   } catch (e) {
