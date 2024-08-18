@@ -166,7 +166,7 @@ app.get("/api/downloader/play", async (req, res) => {
 
   try {
   const { ytdl } = require('node-yt-dl')
-    const data = await ytdl(url);
+    const data = await ytdl.mp3(url);
     if (!data) return res.status(404).json(messages.notRes);
     res.json({ status: true, creator: "Rafael", result: data });
   } catch (e) {
