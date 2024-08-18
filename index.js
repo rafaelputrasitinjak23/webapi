@@ -160,13 +160,13 @@ app.get("/api/tools/remini", async (req, res) => {
     res.status(500).json(messages.error);
   }
 });
-app.get("/api/downloader/igdl", async (req, res) => {
+app.get("/api/downloader/play", async (req, res) => {
   const { url } = req.query;
   if (!url) return res.status(400).json(messages.url);
 
   try {
-  const { igdl } = require('./ig')
-    const data = await igdl(url);
+  const { ytdl } = require('node-yt-dl')
+    const data = await ytdl(url);
     if (!data) return res.status(404).json(messages.notRes);
     res.json({ status: true, creator: "Rafael", result: data });
   } catch (e) {
