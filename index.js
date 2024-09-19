@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const axios = require('axios');
 const danz = require("d-scrape");
+const ytdl = require("./yt.js")
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -134,7 +135,26 @@ async function blackboxAIChat(message) {
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
+// Contoh penggunaan
+(async () => {
+  const client = new YouTubeMusic('gedagedago');
+  const data = await client.fetchSongData();
+  console.log('Final Data:', data);
+})();
 // Downloader Routes
+app.get("/api/down/yt", async (req, res) => {
+const { url } = req.query;
+  if (!url) return res.status(400).json(messages.url);
+  
+  try {
+  const data = await ytdl(url);
+  if (!data) return res.status(404).json(messages.notRes);
+    res.json({ status: true, creator: "Rafael", result: data });
+  } catch (e) {
+    res.status(500).json(messages.error);
+  }
+});
+  
 app.get("/api/downloader/tiktok", async (req, res) => {
   const { url } = req.query;
   if (!url) return res.status(400).json(messages.url);
@@ -160,19 +180,7 @@ app.get("/api/tools/remini", async (req, res) => {
     res.status(500).json(messages.error);
   }
 });
-app.get("/api/downloader/play", async (req, res) => {
-  const { url } = req.query;
-  if (!url) return res.status(400).json(messages.url);
 
-  try {
-  const { ytdl } = require('node-yt-dl')
-    const data = await ytdl.mp3(url);
-    if (!data) return res.status(404).json(messages.notRes);
-    res.json({ status: true, creator: "Rafael", result: data });
-  } catch (e) {
-    res.status(500).json(messages.error);
-  }
-});
 // Endpoint untuk LuminAI
 app.get('/api/luminai', async (req, res) => {
   try {
